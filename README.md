@@ -5,8 +5,6 @@ RackDraw 是一款面向弱电工程的机柜布设小工具。
 无需安装、无需联网、零依赖，单个 exe 文件即可运行。
 典型使用场景：机房建设前期的设备上架规划、弱电施工方案设计、机柜布设文档交付。
 
-本包是**待发布包**，共五项：程序源码（`src/`）、构建脚本（`build/`）、本说明（`README.md`）、许可证（`LICENSE`）、预编译程序（`RackDraw.exe`，32 位，可在 32/64 位 Windows 上运行）。
-
 ## 使用
 
 双击 `RackDraw.exe` 即可运行（免安装、免联网）。
@@ -31,7 +29,7 @@ RackDraw 是一款面向弱电工程的机柜布设小工具。
 | 安装 | 免安装，单个 exe，双击即用 |
 | 依赖 | 无。不需要 .NET、VC++ 运行库等任何第三方组件（静态链接） |
 | 网络 | 程序不联网（「检查更新」只是用系统浏览器打开本仓库页面） |
-| 存档 | 自定义设备存档在 exe 同级目录 `custom-devices.json`（绿色便携，删掉即清空） |
+| 存档 | 自定义设备存档在 exe 同级目录 `custom-devices.json`（绿色便携，删掉即清空设备存档） |
 
 ## 构建
 
@@ -48,16 +46,6 @@ build.bat
 - 关键编译选项：`-std=c++17 -O2 -DUNICODE -D_WIN32_WINNT=0x0601 -finput-charset=UTF-8 -fexec-charset=UTF-8 -municode -mwindows -static -s`，子系统版本 6.01（Win7 SP1 起）。
 - 构建日期在编译时写入程序（`-DAPP_BUILD_DATE`），"关于"对话框与自检报告里显示的就是它。
 - `build/CMakeLists.txt` 是与 `build.bat` 等价的 CMake 配置（可选，需已安装 CMake + Ninja）：`cmake -G Ninja -S build -B build/ninja` 后 `cmake --build build/ninja`。
-
-## 自检
-
-```bat
-RackDraw.exe --selftest
-```
-
-跑 29 条核心逻辑断言（目录与名称匹配、坐标换算、吸附、冲突顺延、布设文件导出→导入往返一致、存档规整与去重、ASCII 对照图、示例场景、导出图渲染与 PNG 编码、落盘），结果同时打印并写入 `selftest-report.txt`；全部通过返回 0（应看到 `PASS=29 FAIL=0`）。
-
-其他命令行参数：`--export-png <路径>`、`--export-md <路径>`（用内置示例场景导出，核对绘制与编码链路）、`--store-info`（打印存档路径）、`--demo`（以示例场景启动界面）。
 
 ## 代码结构
 
@@ -116,16 +104,6 @@ RackDraw待发布/
         ├── app.manifest         comctl32 v6、DPI 感知、支持的系统声明
         └── app.ico              程序图标
 ```
-
-构建中间件与运行产物不在代码之列：`build/obj/`（`build.bat` 自建）、`dist/`（编译产物）、`selftest-report.txt` 与 `selftest-log.txt`（跑 `--selftest` 时写出）、`custom-devices.json`（程序运行时自建的「我的设备」存档）。
-
-**分层约定**
-
-- `core` 只依赖 C++ 标准库与少量系统头（文件读写），**不碰界面**，因此可以命令行自检（`--selftest`）。
-- `ui` 里的机柜与设备是**一次绘制、两处复用**：界面与导出图共用同一套画法与同一份口径（类别配色、LED 与端口数量、几何常量各只有一处定义）。
-- 界面完全自绘，只有弹窗内的输入控件用系统原生控件（中文输入法可靠）。
-- `util` 可调用 Windows API，但不依赖 `ui` 与 `core`。
-- **设备目录数据与布设文件格式一旦调整，导出与导入必须同步改**，否则导入匹配与「导出 → 导入」的往返一致性会出问题。
 
 ## 许可证
 
