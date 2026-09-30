@@ -5,6 +5,8 @@ RackDraw 是一款面向弱电工程的机柜布设小工具。
 无需安装、无需联网、零依赖，单个 exe 文件即可运行。
 典型使用场景：机房建设前期的设备上架规划、弱电施工方案设计、机柜布设文档交付。
 
+![预览图](https://raw.githubusercontent.com/bruce609685-collab/RackDraw/refs/heads/main/%E9%A2%84%E8%A7%88%E5%9B%BE.jpg)
+
 ## 使用
 
 双击 `RackDraw.exe` 即可运行（免安装、免联网）。
