@@ -1,0 +1,45 @@
+/* RackDraw 资源脚本：图标 / manifest / 版本信息
+ *
+ * 说明：
+ *   · 源文件为 UTF-8，编译时须指定代码页：windres --codepage=65001（见 build/build.bat）；
+ *   · 图标 ID 与 ui/main_window.cpp 里的 ICON_ID 保持一致；
+ *   · 版本号取自 app/app_info.h（单一来源）。
+ */
+
+#include "../app/app_info.h"
+
+#define IDI_APPICON 101
+
+/* ---- 应用程序图标 ---- */
+IDI_APPICON ICON "app.ico"
+
+/* ---- 应用程序清单（comctl32 v6 / DPI 感知 / 支持的系统） ---- */
+1 24 "app.manifest"
+
+/* ---- 版本信息 ---- */
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION APP_VERSION_CSV
+PRODUCTVERSION APP_VERSION_CSV
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x40004L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "RackDraw 机柜布局设计"
+            VALUE "FileVersion", APP_VERSION_STR
+            VALUE "InternalName", "RackDraw"
+            VALUE "OriginalFilename", "RackDraw.exe"
+            VALUE "ProductName", "RackDraw"
+            VALUE "ProductVersion", APP_VERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
